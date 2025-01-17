@@ -1,28 +1,55 @@
-import { useLocation } from "wouter";
-import { routes } from "@/routes";
+import { useEffect, useRef } from "react";
+import ac from "@/utils/AudioController";
 import styles from "./index.module.css";
 import type { ChangeEvent } from "react";
 
 function ChooseMusic() {
-  const [, navigate] = useLocation();
+  const urlRef = useRef("");
 
   const handleFileChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    console.log(evt.target.files);
-    navigate(routes[1].path);
+    const files = evt.target.files || [];
+    const file = files[0];
+    if (!file) {
+      return;
+    }
+    if (urlRef.current) {
+      URL.revokeObjectURL(urlRef.current);
+    }
+    urlRef.current = URL.createObjectURL(file);
+    ac.setSrc(urlRef.current);
+    ac.play();
   };
 
   const handleUseExample = () => {
-    navigate(routes[1].path);
+    // Todo
   };
+
+  useEffect(() => {
+    const u = urlRef.current;
+    if (u) {
+      return () => URL.revokeObjectURL(u);
+    }
+  }, []);
 
   return (
     <div className={styles.wrapper}>
-      <input onChange={handleFileChange} type="file" />
       <div>
-        Choose a local music file, or{" "}
-        <a href="#" style={{ color: "#1890ff" }} onClick={handleUseExample}>
+        <div className={styles["button-link"]}>
+          choose
+          <input
+            className={styles.hide}
+            onChange={handleFileChange}
+            type="file"
+            accept="audio/*"
+          />
+        </div>{" "}
+        a local music to play,
+      </div>
+      <div>
+        or{" "}
+        <div className={styles["button-link"]} onClick={handleUseExample}>
           use example music
-        </a>
+        </div>
       </div>
     </div>
   );
