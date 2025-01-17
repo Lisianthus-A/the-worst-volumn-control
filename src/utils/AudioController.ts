@@ -1,5 +1,5 @@
 class AudioController {
-  el: HTMLAudioElement | null = null;
+  private el: HTMLAudioElement | null = null;
 
   getElement() {
     return (
@@ -31,6 +31,14 @@ class AudioController {
     }
 
     this.el.src = src;
+  }
+
+  getSrc() {
+    if (!this.el) {
+      this.el = this.getElement();
+    }
+
+    return this.el.src;
   }
 }
 
