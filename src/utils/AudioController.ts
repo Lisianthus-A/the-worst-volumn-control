@@ -40,6 +40,14 @@ class AudioController {
 
     return this.el.src;
   }
+
+  play() {
+    if (!this.el) {
+      this.el = this.getElement();
+    }
+
+    this.el.play();
+  }
 }
 
 export default new AudioController();
