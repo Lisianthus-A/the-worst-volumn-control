@@ -14,6 +14,7 @@ function App() {
   }
 
   const Component = lazy(routeObj.route.component);
+  document.title = routeObj.route.name;
 
   return (
     <Layout>
