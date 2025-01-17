@@ -1,0 +1,40 @@
+.wrapper {
+  --offset: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 240px;
+  height: 40px;
+  background-color: #fff;
+  border: 2px solid #000;
+  cursor: grab;
+}
+
+.track {
+  width: 180px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #ddd;
+}
+
+.rail {
+  width: 12px;
+  height: 12px;
+  transform: translate(var(--offset), -3px);
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+}
+
+@media screen and (max-width: 640px) {
+  .wrapper {
+    flex-direction: column;
+  }
+}

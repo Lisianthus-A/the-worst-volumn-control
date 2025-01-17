@@ -1,0 +1,57 @@
+.layout {
+  --volumn: "50";
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden auto;
+}
+
+.title {
+  padding: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #fff;
+}
+
+.aim {
+  position: relative;
+  padding: 16px 32px;
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.aim::before {
+  content: "";
+  display: block;
+  background-color: #66bb6a;
+  width: 4px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.volumn {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.volumn::after {
+  margin-left: 4px;
+  display: inline-block;
+  content: var(--volumn);
+}
+
+.btns {
+  display: flex;
+  gap: 8px;
+}

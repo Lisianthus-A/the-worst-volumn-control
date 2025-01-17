@@ -1,0 +1,70 @@
+.menu {
+  display: block;
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.icon {
+  display: block;
+  font-size: 24px;
+}
+
+.checkbox:checked + .mask {
+  pointer-events: auto;
+  opacity: 1;
+}
+.checkbox:checked + .mask .drawer {
+  transform: translateX(0%);
+}
+
+.mask {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.drawer {
+  height: 100vh;
+  background-color: #fff;
+  transform: translateX(-100%);
+  transition: transform 0.4s;
+  overflow: auto;
+}
+
+.link-list {
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.link {
+  position: relative;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 8px;
+}
+
+.link:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.link-active,
+.link-active:hover {
+  color: #1890ff;
+  background-color: #e6f4ff;
+}

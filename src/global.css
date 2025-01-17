@@ -1,0 +1,34 @@
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+audio {
+  display: none;
+}
+
+.tick::before {
+  content: "";
+  display: block;
+  border: 2px solid #c7c7c7;
+  border-top: none;
+  border-right: none;
+  height: 6px;
+  transform: rotate(-45deg) translateX(3px);
+  width: 12px;
+}
+
+.tick-green::before {
+  border-color: #66bb6a;
+}
