@@ -12,7 +12,7 @@ export const routes: RouteItem[] = [
   {
     name: "Choose Music",
     aim: "",
-    aimText: "Choose a local music file, or...",
+    aimText: "Choose a local music to play, or...",
     path: "/",
     component: () => import("@/pages/choose-music"),
   },
