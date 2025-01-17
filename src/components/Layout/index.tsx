@@ -21,12 +21,14 @@ function Layout({ children }: Props) {
   const routeObj = mapPathToRoute.get(location)!;
 
   const handleComplete = () => {
-    const { route } = routeObj;
+    const { route, index } = routeObj;
     const aimRange = route.aim.split(",").map(Number);
 
     const volumn = ac.getVolumn();
     let isComplete = false;
-    if (aimRange.length === 1 && volumn === aimRange[0]) {
+    if (index === 0) {
+      isComplete = ac.getSrc() !== "";
+    } else if (aimRange.length === 1 && volumn === aimRange[0]) {
       isComplete = true;
     } else if (
       aimRange.length === 2 &&
@@ -89,15 +91,13 @@ function Layout({ children }: Props) {
       <div className={styles.aim}>Aim: {route.aimText}</div>
       {index !== 0 && <div className={styles.volumn}>Volumn:</div>}
       {children}
-      {index !== 0 && (
-        <div className={styles.btns}>
-          {hasPrev && <button onClick={() => handleNavigate(-1)}>Prev</button>}
-          <button onClick={handleComplete} disabled={isComplete}>
-            Complete
-          </button>
-          {hasNext && <button onClick={() => handleNavigate(1)}>Next</button>}
-        </div>
-      )}
+      <div className={styles.btns}>
+        {hasPrev && <button onClick={() => handleNavigate(-1)}>Prev</button>}
+        <button onClick={handleComplete} disabled={isComplete}>
+          Complete
+        </button>
+        {hasNext && <button onClick={() => handleNavigate(1)}>Next</button>}
+      </div>
     </div>
   );
 }
