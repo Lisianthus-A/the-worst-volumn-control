@@ -32,9 +32,3 @@
   border: 1px solid #aaa;
   background-color: #fff;
 }
-
-@media screen and (max-width: 640px) {
-  .wrapper {
-    flex-direction: column;
-  }
-}
