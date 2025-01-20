@@ -27,6 +27,7 @@
   padding: 16px 32px;
   background-color: #fff;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 4px;
 }
 
 .aim::before {
@@ -35,6 +36,7 @@
   background-color: #66bb6a;
   width: 4px;
   height: 100%;
+  border-radius: 4px 0 0 4px;
   position: absolute;
   left: 0;
   top: 0;
