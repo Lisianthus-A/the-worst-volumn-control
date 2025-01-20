@@ -5,6 +5,11 @@
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+  border-radius: 4px;
+}
+
+.menu:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .icon {
