@@ -20,7 +20,7 @@ function ChooseMusic() {
     ac.play();
   };
 
-  const handleUseExample = () => {
+  const handleUseSample = () => {
     // Todo
   };
 
@@ -47,8 +47,8 @@ function ChooseMusic() {
       </div>
       <div>
         or{" "}
-        <div className={styles["button-link"]} onClick={handleUseExample}>
-          use example music
+        <div className={styles["button-link"]} onClick={handleUseSample}>
+          use sample music
         </div>
       </div>
     </div>
