@@ -17,6 +17,13 @@ export const routes: RouteItem[] = [
     component: () => import("@/pages/choose-music"),
   },
   {
+    name: "Dice",
+    aim: "85",
+    aimText: "Set the volume to 85",
+    path: "/dice",
+    component: () => import("@/pages/dice"),
+  },
+  {
     name: "Random Change",
     aim: "80,85",
     aimText: "Set the volume to 80 ~ 85",

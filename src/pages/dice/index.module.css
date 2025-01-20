@@ -1,0 +1,97 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  perspective: 400px;
+}
+
+.desc {
+  color: #999;
+}
+
+.dice {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  transform-style: preserve-3d;
+  transition: transform 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+  cursor: pointer;
+}
+
+.side {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+
+.side1 {
+  transform: translateZ(-40px) rotateX(180deg);
+}
+
+.side2 {
+  transform: translateY(-40px) rotateX(90deg);
+}
+
+.side3 {
+  transform: translateX(40px) rotateY(90deg);
+}
+
+.side4 {
+  transform: translateX(-40px) rotateY(270deg);
+}
+
+.side5 {
+  transform: translateY(40px) rotateX(270deg);
+}
+
+.side6 {
+  transform: translateZ(40px);
+}
+
+.point {
+  --size: 12px;
+  position: absolute;
+  background-color: #000;
+  width: var(--size);
+  height: var(--size);
+  border-radius: calc(var(--size) / 2);
+}
+
+.p7,
+.p4,
+.p1 {
+  left: calc(20px - 0.75 * var(--size));
+}
+
+.p8,
+.p5,
+.p2 {
+  left: calc(40px - 0.5 * var(--size));
+}
+
+.p9,
+.p6,
+.p3 {
+  left: calc(60px - 0.25 * var(--size));
+}
+
+.p7,
+.p8,
+.p9 {
+  top: calc(20px - 0.75 * var(--size));
+}
+
+.p4,
+.p5,
+.p6 {
+  top: calc(40px - 0.5 * var(--size));
+}
+
+.p1,
+.p2,
+.p3 {
+  top: calc(60px - 0.25 * var(--size));
+}
