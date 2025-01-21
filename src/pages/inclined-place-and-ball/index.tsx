@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import ac from "@/utils/AudioController";
 import styles from "./index.module.css";
+import layoutStyles from "@/components/Layout/index.module.css";
 import type { TouchEvent } from "react";
 
 interface CustomDownEvent {
@@ -107,6 +108,16 @@ function InclinedPlaceAndBall() {
       clientY: touch.clientY,
     });
   };
+
+  useEffect(() => {
+    const volumeEl = document.getElementsByClassName(
+      layoutStyles.volume
+    )[0] as HTMLDivElement;
+    volumeEl.style.transition = "none";
+    return () => {
+      volumeEl.style.transition = "";
+    };
+  }, []);
 
   useEffect(() => {
     const el = controllerRef.current;
