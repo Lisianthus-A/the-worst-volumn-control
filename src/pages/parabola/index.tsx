@@ -102,6 +102,7 @@ function Parabola() {
           parabolaRef.current.runningTime = 0;
           ac.setVolume(((x2 + 6) / 2) >> 0);
         }
+        return;
       }
 
       // rotate animate begin
