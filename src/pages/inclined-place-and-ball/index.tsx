@@ -162,7 +162,7 @@ function InclinedPlaceAndBall() {
 
       const offset = (valueRef.current / 100) * trackWidth - 6;
       el.style.setProperty("--offset", `${offset}px`);
-      ac.setVolumn(valueRef.current >> 0);
+      ac.setVolume(valueRef.current >> 0);
     };
 
     id = requestAnimationFrame(handler);

@@ -100,7 +100,7 @@ function Parabola() {
 
         if (rate >= 1) {
           parabolaRef.current.runningTime = 0;
-          ac.setVolumn(((x2 + 6) / 2) >> 0);
+          ac.setVolume(((x2 + 6) / 2) >> 0);
         }
       }
 

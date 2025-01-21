@@ -1,5 +1,5 @@
 .layout {
-  --volumn: "50";
+  --volume: "50";
   margin: 0 auto;
   height: 100vh;
   display: flex;
@@ -42,15 +42,15 @@
   top: 0;
 }
 
-.volumn {
+.volume {
   font-weight: bold;
   font-size: 20px;
 }
 
-.volumn::after {
+.volume::after {
   margin-left: 4px;
   display: inline-block;
-  content: var(--volumn);
+  content: var(--volume);
 }
 
 .btns {

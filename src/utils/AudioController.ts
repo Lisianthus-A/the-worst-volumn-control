@@ -9,7 +9,7 @@ class AudioController {
   }
 
   // value: 0 ~ 100
-  setVolumn(value: number) {
+  setVolume(value: number) {
     if (!this.el) {
       this.el = this.getElement();
     }
@@ -17,7 +17,7 @@ class AudioController {
     this.el.volume = value / 100;
   }
 
-  getVolumn() {
+  getVolume() {
     if (!this.el) {
       this.el = this.getElement();
     }

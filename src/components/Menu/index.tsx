@@ -19,7 +19,7 @@ function Menu() {
     }
 
     checkbox.click();
-    ac.setVolumn(50);
+    ac.setVolume(50);
   };
 
   return (

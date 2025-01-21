@@ -24,16 +24,16 @@ function Layout({ children }: Props) {
     const { route, index } = routeObj;
     const aimRange = route.aim.split(",").map(Number);
 
-    const volumn = ac.getVolumn();
+    const volume = ac.getVolume();
     let isComplete = false;
     if (index === 0) {
       isComplete = ac.getSrc() !== "";
-    } else if (aimRange.length === 1 && volumn === aimRange[0]) {
+    } else if (aimRange.length === 1 && volume === aimRange[0]) {
       isComplete = true;
     } else if (
       aimRange.length === 2 &&
-      volumn >= aimRange[0] &&
-      volumn <= aimRange[1]
+      volume >= aimRange[0] &&
+      volume <= aimRange[1]
     ) {
       isComplete = true;
     }
@@ -48,7 +48,7 @@ function Layout({ children }: Props) {
 
   const handleNavigate = (n: number) => {
     const { index } = routeObj;
-    ac.setVolumn(50);
+    ac.setVolume(50);
     navigate(routes[index + n].path);
   };
 
@@ -58,19 +58,19 @@ function Layout({ children }: Props) {
       dispatch(markLevelAsFinished(localFinishedData.split(",")));
     }
 
-    ac.setVolumn(50);
+    ac.setVolume(50);
     const el = ac.getElement();
-    const onVolumnChange = () => {
+    const onVolumeChange = () => {
       if (!layoutRef.current) {
         return;
       }
-      const volume = ac.getVolumn();
-      layoutRef.current.style.setProperty("--volumn", `"${volume}"`);
+      const volume = ac.getVolume();
+      layoutRef.current.style.setProperty("--volume", `"${volume}"`);
     };
 
-    el.addEventListener("volumechange", onVolumnChange);
+    el.addEventListener("volumechange", onVolumeChange);
     return () => {
-      el.removeEventListener("volumechange", onVolumnChange);
+      el.removeEventListener("volumechange", onVolumeChange);
     };
   }, [dispatch]);
 
@@ -89,7 +89,7 @@ function Layout({ children }: Props) {
         {title}
       </div>
       <div className={styles.aim}>Aim: {route.aimText}</div>
-      {index !== 0 && <div className={styles.volumn}>Volumn:</div>}
+      {index !== 0 && <div className={styles.volume}>Volume:</div>}
       {children}
       <div className={styles.btns}>
         {hasPrev && <button onClick={() => handleNavigate(-1)}>Prev</button>}
