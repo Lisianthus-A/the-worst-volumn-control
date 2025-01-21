@@ -15,7 +15,7 @@ interface Props {
 
 function Layout({ children }: Props) {
   const [location, navigate] = useLocation();
-  const layoutRef = useRef<HTMLDivElement>(null);
+  const volumeRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const finishedList = useAppSelector((state) => state.common.finishedList);
   const routeObj = mapPathToRoute.get(location)!;
@@ -61,11 +61,11 @@ function Layout({ children }: Props) {
     ac.setVolume(50);
     const el = ac.getElement();
     const onVolumeChange = () => {
-      if (!layoutRef.current) {
+      if (!volumeRef.current) {
         return;
       }
       const volume = ac.getVolume();
-      layoutRef.current.style.setProperty("--volume", `"${volume}"`);
+      volumeRef.current.style.setProperty("--volume", `${volume}`);
     };
 
     el.addEventListener("volumechange", onVolumeChange);
@@ -81,7 +81,7 @@ function Layout({ children }: Props) {
   const hasNext = routes[index + 1] !== undefined;
 
   return (
-    <div className={styles.layout} ref={layoutRef}>
+    <div className={styles.layout}>
       <div
         className={classNames(styles.title, "tick", isComplete && "tick-green")}
       >
@@ -89,7 +89,7 @@ function Layout({ children }: Props) {
         {title}
       </div>
       <div className={styles.aim}>Aim: {route.aimText}</div>
-      {index !== 0 && <div className={styles.volume}>Volume:</div>}
+      {index !== 0 && <div className={styles.volume} ref={volumeRef}>Volume:</div>}
       {children}
       <div className={styles.btns}>
         {hasPrev && <button onClick={() => handleNavigate(-1)}>Prev</button>}

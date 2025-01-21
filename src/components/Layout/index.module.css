@@ -1,5 +1,10 @@
+@property --volume {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
 .layout {
-  --volume: "50";
   margin: 0 auto;
   height: 100vh;
   display: flex;
@@ -43,6 +48,9 @@
 }
 
 .volume {
+  --volume: 50;
+  counter-reset: volume var(--volume);
+  transition: 0.4s --volume;
   font-weight: bold;
   font-size: 20px;
 }
@@ -50,7 +58,7 @@
 .volume::after {
   margin-left: 4px;
   display: inline-block;
-  content: var(--volume);
+  content: counter(volume) "%";
 }
 
 .btns {
