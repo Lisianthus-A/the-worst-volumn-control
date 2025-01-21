@@ -51,7 +51,7 @@ function Menu() {
               {routes.map((route, index) => {
                 const isActive = location === route.path;
                 const isComplete = finishedList.indexOf(route.name) >= 0;
-                const title = `${index + 1}. ${route.name}`;
+                const title = `${index}. ${route.name}`;
 
                 return (
                   <Link
