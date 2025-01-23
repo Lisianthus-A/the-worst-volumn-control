@@ -1,13 +1,18 @@
 import { useEffect, useRef } from "react";
+import { detectMobile } from "@/utils";
 import ac from "@/utils/AudioController";
 import audioSvgPath from "./audioSvgPath";
 import styles from "./index.module.css";
-import type { MouseEvent } from "react";
+
+interface CustomDownEvent {
+  button: number;
+}
 
 const rotateAnimateDuration = 1000;
 const radius = 22;
 
 function Parabola() {
+  const isMobile = detectMobile();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const gradientRef = useRef<SVGRadialGradientElement>(null);
   const handleRef = useRef<HTMLDivElement>(null);
@@ -28,7 +33,11 @@ function Parabola() {
 
     document.body.style.userSelect = "";
     clickTime.current = 0;
-    window.removeEventListener("mouseup", handleMouseUp);
+    if (isMobile) {
+      window.removeEventListener("touchend", handleMouseUp);
+    } else {
+      window.removeEventListener("mouseup", handleMouseUp);
+    }
 
     const wrapper = wrapperRef.current;
     const gradient = gradientRef.current;
@@ -54,7 +63,7 @@ function Parabola() {
     handle.style.opacity = "1";
   };
 
-  const handleMouseDown = (evt: MouseEvent) => {
+  const handleMouseDown = (evt: CustomDownEvent) => {
     const handle = handleRef.current;
     if (evt.button !== 0 || !handle) {
       return;
@@ -63,7 +72,17 @@ function Parabola() {
     handle.style.opacity = "0";
     document.body.style.userSelect = "none";
     clickTime.current = Date.now();
-    window.addEventListener("mouseup", handleMouseUp);
+    if (isMobile) {
+      window.addEventListener("touchend", handleMouseUp);
+    } else {
+      window.addEventListener("mouseup", handleMouseUp);
+    }
+  };
+
+  const handleTouchStart = () => {
+    handleMouseDown({
+      button: 0,
+    });
   };
 
   useEffect(() => {
@@ -145,7 +164,8 @@ function Parabola() {
         width="1em"
         height="1em"
         fill="url(#radial-grad)"
-        onMouseDown={handleMouseDown}
+        onMouseDown={isMobile ? undefined : handleMouseDown}
+        onTouchStart={isMobile ? handleTouchStart : undefined}
       >
         <radialGradient ref={gradientRef} id="radial-grad" cx="0%" r="0%">
           <stop offset="0%" stopColor="#4a95ff" />
