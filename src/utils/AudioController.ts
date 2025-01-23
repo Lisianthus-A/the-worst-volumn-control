@@ -1,5 +1,8 @@
+import AudioVisualization from "@/utils/AudioVisualization";
+
 class AudioController {
   private el: HTMLAudioElement | null = null;
+  private av: AudioVisualization | null = null;
 
   getElement() {
     return (
@@ -44,6 +47,10 @@ class AudioController {
   play() {
     if (!this.el) {
       this.el = this.getElement();
+    }
+    if (!this.av) {
+      this.av = new AudioVisualization();
+      this.av.resume();
     }
 
     this.el.play();

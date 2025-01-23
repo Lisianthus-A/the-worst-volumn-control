@@ -56,3 +56,12 @@ audio {
 .tick-green::before {
   border-color: #66bb6a;
 }
+
+#visualization-canvas {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.2;
+  z-index: 1;
+}
