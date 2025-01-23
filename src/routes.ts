@@ -38,7 +38,7 @@ export const routes: RouteItem[] = [
     component: () => import("@/pages/parabola"),
   },
   {
-    name: "Inclined Place And Ball",
+    name: "Inclined Place",
     aim: "80",
     aimText: "Set the volume to 80",
     path: "/inclined-place-and-ball",
