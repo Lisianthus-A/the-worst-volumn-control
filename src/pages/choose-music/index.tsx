@@ -48,7 +48,7 @@ function ChooseMusic() {
       <div>
         or{" "}
         <div className={styles["button-link"]} onClick={handleUseSample}>
-          use sample music
+          use the sample music
         </div>
       </div>
     </div>
