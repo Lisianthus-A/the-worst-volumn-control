@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { detectMobile } from "@/utils";
 import ac from "@/utils/AudioController";
 import styles from "./index.module.css";
 import layoutStyles from "@/components/Layout/index.module.css";
@@ -20,6 +21,7 @@ const friction = 0.05;
 const trackWidth = 180;
 
 function InclinedPlaceAndBall() {
+  const isMobile = detectMobile();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const controllerRef = useRef<HTMLDivElement>(null);
   const centerPointRef = useRef({ x: 0, y: 0 });
@@ -47,7 +49,6 @@ function InclinedPlaceAndBall() {
   };
 
   const handleTouchMove = (evt: globalThis.TouchEvent) => {
-    evt.preventDefault();
     const touch = evt.touches[0];
     handleMouseMove({
       clientX: touch.clientX,
@@ -62,11 +63,13 @@ function InclinedPlaceAndBall() {
     }
 
     document.body.style.userSelect = "";
-    window.removeEventListener("mousemove", handleMouseMove);
-    window.removeEventListener("mouseup", handleMouseUp);
-    window.removeEventListener("touchmove", handleTouchMove);
-    window.removeEventListener("touchend", handleMouseUp);
-
+    if (isMobile) {
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleMouseUp);
+    } else {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    }
     isEndingRef.current = true;
     slopeRef.current = 0;
     velocityRef.current = 0;
@@ -93,14 +96,16 @@ function InclinedPlaceAndBall() {
     isFromLeftRef.current = evt.clientX < centerPointRef.current.x;
     el.style.cursor = "grabbing";
     document.body.style.userSelect = "none";
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("touchmove", handleTouchMove);
-    window.addEventListener("touchend", handleMouseUp);
+    if (isMobile) {
+      window.addEventListener("touchmove", handleTouchMove);
+      window.addEventListener("touchend", handleMouseUp);
+    } else {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    }
   };
 
   const handleTouchStart = (evt: TouchEvent) => {
-    evt.preventDefault();
     const touch = evt.touches[0];
     handleMouseDown({
       button: 0,
@@ -188,8 +193,8 @@ function InclinedPlaceAndBall() {
       <div
         className={styles.controller}
         ref={controllerRef}
-        onMouseDown={handleMouseDown}
-        onTouchStart={handleTouchStart}
+        onMouseDown={isMobile ? undefined : handleMouseDown}
+        onTouchStart={isMobile ? handleTouchStart : undefined}
       >
         <div className={styles.track}>
           <div className={styles.rail} />
