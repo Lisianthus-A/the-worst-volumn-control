@@ -26,7 +26,6 @@ class AudioVisualization {
     this.onResize();
     this.draw();
     window.addEventListener("resize", this.onResize);
-    console.log(this);
   }
 
   private onResize() {
