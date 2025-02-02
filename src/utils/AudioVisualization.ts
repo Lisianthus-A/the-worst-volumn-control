@@ -54,9 +54,9 @@ class AudioVisualization {
   draw() {
     requestAnimationFrame(this.draw);
 
-    const f32array = new Float32Array(this.analyser.frequencyBinCount);
-    this.analyser.getFloatFrequencyData(f32array);
-    const data = f32array.map((v) => Math.max(0, v / 140 + 1));
+    const u8array = new Uint8Array(this.analyser.frequencyBinCount);
+    this.analyser.getByteFrequencyData(u8array);
+    const data = Array.from(u8array).map((v) => v / 255);
     this.canvasContext.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     const w = this.canvasWidth / data.length;
     data.forEach((value, index) => {
