@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import ac from "@/utils/AudioController";
+import sampleMp3 from "./sample.mp3";
 import styles from "./index.module.css";
 import type { ChangeEvent } from "react";
 
@@ -21,7 +22,8 @@ function ChooseMusic() {
   };
 
   const handleUseSample = () => {
-    // Todo
+    ac.setSrc(sampleMp3);
+    ac.play();
   };
 
   useEffect(() => {
