@@ -38,6 +38,7 @@
   overflow: hidden;
   pointer-events: none;
   transition: opacity 0.2s;
+  z-index: 2;
 }
 
 .drawer {
