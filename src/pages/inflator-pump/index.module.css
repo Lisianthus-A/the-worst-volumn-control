@@ -1,0 +1,52 @@
+.pump {
+  --percentage: 50%;
+  margin-top: 80px;
+  width: 32px;
+  height: 160px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  border: 8px solid #000;
+}
+
+.pump::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 2;
+}
+
+.inner {
+  width: 100%;
+  height: var(--percentage);
+  background-color: #1890ff;
+  z-index: 3;
+}
+
+.handle {
+  --offsetY: 0px;
+  width: 64px;
+  height: 12px;
+  position: absolute;
+  left: -24px;
+  top: -80px;
+  transform: translateY(var(--offsetY));
+  display: flex;
+  justify-content: center;
+  background-color: #000;
+  cursor: grab;
+  z-index: 1;
+}
+
+.handle::after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 80px;
+  background-color: #000;
+}
