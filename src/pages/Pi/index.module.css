@@ -1,0 +1,29 @@
+.wrapper {
+  height: 60px;
+  word-break: break-all;
+  display: flex;
+  align-items: center;
+}
+
+.weaken {
+  margin: 8px;
+  color: #999;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.num {
+  transition: font-size 0.4s;
+}
+
+.num-active {
+  font-size: 40px;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}

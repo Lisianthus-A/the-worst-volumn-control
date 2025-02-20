@@ -24,6 +24,13 @@ export const routes: RouteItem[] = [
     component: () => import("@/pages/inflator-pump"),
   },
   {
+    name: "Pi",
+    aim: "80",
+    aimText: "Set the volume to 80",
+    path: "/pi",
+    component: () => import("@/pages/Pi"),
+  },
+  {
     name: "Dice",
     aim: "85",
     aimText: "Set the volume to 85",
