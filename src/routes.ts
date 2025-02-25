@@ -58,6 +58,13 @@ export const routes: RouteItem[] = [
     path: "/inclined-place-and-ball",
     component: () => import("@/pages/inclined-place-and-ball"),
   },
+  {
+    name: "Whiteboard",
+    aim: "80",
+    aimText: "Set the volume to 80",
+    path: "/whiteboard",
+    component: () => import("@/pages/whiteboard"),
+  },
 ];
 
 export const mapPathToRoute = new Map<
