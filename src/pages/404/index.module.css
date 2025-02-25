@@ -1,0 +1,26 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.emphasis {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.divider {
+  width: 1px;
+  height: 48px;
+  background-color: #aaa;
+}
