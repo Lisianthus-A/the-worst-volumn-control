@@ -4,17 +4,6 @@ import ac from "@/utils/AudioController";
 import styles from "./index.module.css";
 import type { MouseEvent, TouchEvent } from "react";
 
-// interface CustomDownEvent {
-//   button: number;
-//   clientX: number;
-//   clientY: number;
-// }
-
-// interface CustomMoveEvent {
-//   clientX: number;
-//   clientY: number;
-// }
-
 const ratio = window.devicePixelRatio || 1;
 const rectSize = 4 * ratio;
 const canvasWidth = 200 * ratio;
