@@ -18,6 +18,8 @@ const sliceSize = 10;
 
 function Pi() {
   const [index, setIndex] = useState(0);
+  const num = precisionPi.slice(index, index + 2);
+  ac.setVolume(Number(num));
 
   useEffect(() => {
     const onKeydown = (evt: KeyboardEvent) => {
@@ -33,11 +35,6 @@ function Pi() {
       document.removeEventListener("keydown", onKeydown);
     };
   }, []);
-
-  useEffect(() => {
-    const num = precisionPi.slice(index, index + 2);
-    ac.setVolume(Number(num));
-  }, [index]);
 
   useEffect(() => {
     const volumeEl = document.getElementsByClassName(
