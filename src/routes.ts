@@ -65,6 +65,13 @@ export const routes: RouteItem[] = [
     path: "/whiteboard",
     component: () => import("@/pages/whiteboard"),
   },
+  {
+    name: "Curling",
+    aim: "80,85",
+    aimText: "Set the volume to 80",
+    path: "/curling",
+    component: () => import("@/pages/curling"),
+  },
 ];
 
 export const mapPathToRoute = new Map<
