@@ -1,6 +1,6 @@
 .wrapper {
   --angle: 0deg;
-  --offsetX: -6px;
+  --offsetX: 94px;
   --offsetY: -3px;
   display: flex;
   justify-content: center;
