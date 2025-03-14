@@ -67,8 +67,8 @@ export const routes: RouteItem[] = [
   },
   {
     name: "Curling",
-    aim: "80,85",
-    aimText: "Set the volume to 80",
+    aim: "90,99",
+    aimText: "Set the volume to 90 ~ 99",
     path: "/curling",
     component: () => import("@/pages/curling"),
   },

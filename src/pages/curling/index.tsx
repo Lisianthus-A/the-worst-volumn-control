@@ -3,8 +3,7 @@ import { detectMobile } from "@/utils";
 // import ac from "@/utils/AudioController";
 import styles from "./index.module.css";
 import classNames from "classnames";
-// TouchEvent
-import type { MouseEvent } from "react";
+import type { MouseEvent, TouchEvent } from "react";
 
 const ratio = window.devicePixelRatio || 1;
 const canvasWidth = 400 * ratio;
@@ -57,7 +56,6 @@ const drawBlueLine = (ctx: CanvasRenderingContext2D, x: number) => {
 
 const drawGrayLine = (ctx: CanvasRenderingContext2D) => {
   ctx.save();
-  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
   ctx.fillStyle = "#888888";
   ctx.fillRect(
     (canvasWidth - grayLineWidth) / 2,
@@ -69,11 +67,11 @@ const drawGrayLine = (ctx: CanvasRenderingContext2D) => {
 };
 
 const drawWhiteCircle = (ctx: CanvasRenderingContext2D, x: number) => {
-  // start: (canvasWidth - grayLineWidth) / 2
-  // end: blueLineStartX + blueLineWidth / 2
   ctx.save();
   ctx.fillStyle = "#ffffff";
+  ctx.beginPath();
   ctx.arc(x, halfHeight, WhiteCircleRadius, 0, 2 * Math.PI);
+  ctx.closePath();
   ctx.fill();
   ctx.restore();
 };
@@ -85,16 +83,45 @@ function Curling() {
   const upperContextRef = useRef<CanvasRenderingContext2D | null>(null);
   const isMobile = detectMobile();
   const stateRef = useRef({
+    isDragging: false,
     offset: [0, 0],
     circleX: (whiteCircleStart + whiteCircleEnd) / 2,
+    t: [0, 0],
+    beginX: 0,
   });
 
-  // const handleMouseMove = (evt: MouseEvent) => {
-  //   const [offsetX, offsetY] = stateRef.current.offset;
-  //   const x = (evt.pageX - offsetX) * ratio;
-  //   const y = (evt.pageY - offsetY) * ratio;
-  //   console.log(x, y);
-  // };
+  const handleMouseUp = () => {
+    stateRef.current.isDragging = false;
+    window.removeEventListener(
+      isMobile ? "touchend" : "mouseup",
+      handleMouseUp
+    );
+  };
+
+  const handleTouchMove = (evt: TouchEvent) => {
+    if (!stateRef.current.isDragging) {
+      return;
+    }
+
+    const touch = evt.touches[0];
+    const [offsetX] = stateRef.current.offset;
+    let x = (touch.pageX - offsetX) * ratio;
+    x = Math.max(x, whiteCircleStart);
+    x = Math.min(x, blueLineStartX);
+    doDrawUpper(x);
+  };
+
+  const handleMouseMove = (evt: MouseEvent) => {
+    if (!stateRef.current.isDragging) {
+      return;
+    }
+
+    const [offsetX] = stateRef.current.offset;
+    let x = (evt.pageX - offsetX) * ratio;
+    x = Math.max(x, whiteCircleStart);
+    x = Math.min(x, blueLineStartX);
+    doDrawUpper(x);
+  };
 
   const handleMouseDown = (evt: MouseEvent) => {
     if (evt.button !== 0) {
@@ -103,18 +130,31 @@ function Curling() {
     const [offsetX, offsetY] = stateRef.current.offset;
     const x = (evt.pageX - offsetX) * ratio;
     const y = (evt.pageY - offsetY) * ratio;
-    // const centerOfCircle = [stateRef.current.circleX, halfHeight];
     const distanceToCircle = Math.sqrt(
       Math.pow(x - stateRef.current.circleX, 2) + Math.pow(y - halfHeight, 2)
     );
 
-    if (distanceToCircle <= WhiteCircleRadius) {
-      console.log(`(${x}, ${y}) -- ${distanceToCircle}: hit`);
-    } else {
-      console.log(`(${x}, ${y}) -- ${distanceToCircle}: else`);
-    }
+    const isDragging = distanceToCircle <= WhiteCircleRadius;
+    stateRef.current.isDragging = isDragging;
 
-    // handleMouseMove(evt);
+    handleMouseMove(evt);
+    window.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleTouchStart = (evt: TouchEvent) => {
+    const touch = evt.touches[0];
+    const [offsetX, offsetY] = stateRef.current.offset;
+    const x = (touch.pageX - offsetX) * ratio;
+    const y = (touch.pageY - offsetY) * ratio;
+    const distanceToCircle = Math.sqrt(
+      Math.pow(x - stateRef.current.circleX, 2) + Math.pow(y - halfHeight, 2)
+    );
+
+    const isDragging = distanceToCircle <= WhiteCircleRadius;
+    stateRef.current.isDragging = isDragging;
+
+    handleTouchMove(evt);
+    window.addEventListener("touchend", handleMouseUp);
   };
 
   const whiteAnimate = () => {
@@ -124,6 +164,47 @@ function Curling() {
     }
 
     whiteBackgroundAnimate(ctx);
+  };
+
+  const doDrawUpper = (x: number) => {
+    const ctx = upperContextRef.current;
+    if (!ctx) {
+      return;
+    }
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    const now = Date.now();
+    if (now - stateRef.current.t[0] > 100 || x <= stateRef.current.circleX) {
+      stateRef.current.t[1] = now;
+      stateRef.current.beginX = x;
+    }
+    stateRef.current.t[0] = now;
+    stateRef.current.circleX = x;
+
+    drawGrayLine(ctx);
+    drawBlueLine(ctx, blueLineStartX);
+    drawWhiteCircle(ctx, x);
+    if (x >= blueLineStartX) {
+      const duration = Date.now() - stateRef.current.t[1];
+      let speed =
+        (((blueLineStartX - stateRef.current.beginX) / duration) * 1000) /
+        ratio;
+      if (isNaN(speed)) {
+        speed = 0;
+      }
+      speed = Math.min(speed, 5000);
+
+      // spped: 0 ~ 5000
+      // volume: 20 ~ 100
+      const volume = (speed / 5000) * 80 + 20;
+      console.log(`%cvolume: ${volume >> 0}`, "color: blue");
+
+      console.log(`range: ${blueLineStartX - stateRef.current.beginX}`);
+      console.log(`duration: ${duration}ms`);
+      console.log(`speed: ${speed}`);
+      handleMouseUp();
+      // Todo: animate
+    }
   };
 
   useEffect(() => {
@@ -137,12 +218,10 @@ function Curling() {
     upperContextRef.current = upperCanvas.getContext("2d");
     // upper canvas init
     if (upperContextRef.current) {
+      upperContextRef.current.clearRect(0, 0, canvasWidth, canvasHeight);
       drawGrayLine(upperContextRef.current);
       drawBlueLine(upperContextRef.current, blueLineStartX);
-      drawWhiteCircle(
-        upperContextRef.current,
-        (whiteCircleStart + whiteCircleEnd) / 2
-      );
+      drawWhiteCircle(upperContextRef.current, stateRef.current.circleX);
     }
   }, []);
 
@@ -180,9 +259,9 @@ function Curling() {
           width={canvasWidth}
           height={canvasHeight}
           onMouseDown={isMobile ? undefined : handleMouseDown}
-          // onMouseMove={isMobile ? undefined : handleMouseMove}
-          // onTouchStart={isMobile ? handleTouchStart : undefined}
-          // onTouchMove={isMobile ? handleTouchMove : undefined}
+          onMouseMove={isMobile ? undefined : handleMouseMove}
+          onTouchStart={isMobile ? handleTouchStart : undefined}
+          onTouchMove={isMobile ? handleTouchMove : undefined}
         />
       </div>
       <button onClick={whiteAnimate}>whiteAnimate</button>
