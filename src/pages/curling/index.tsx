@@ -99,6 +99,7 @@ function Curling() {
 
   const handleMouseUp = () => {
     stateRef.current.isDragging = false;
+    document.body.style.userSelect = "";
     window.removeEventListener(
       isMobile ? "touchend" : "mouseup",
       handleMouseUp
@@ -106,7 +107,9 @@ function Curling() {
   };
 
   const handleInteractionMove = (evt: MouseEvent | TouchEvent) => {
-    if (!stateRef.current.isDragging) return;
+    if (!stateRef.current.isDragging) {
+      return;
+    }
 
     const [pageX] = getEventPosition(evt);
     const [offsetX] = stateRef.current.offset;
@@ -132,6 +135,9 @@ function Curling() {
     );
 
     stateRef.current.isDragging = distanceToCircle <= CONFIG.whiteCircle.radius;
+    if (stateRef.current.isDragging) {
+      document.body.style.userSelect = "none";
+    }
     handleInteractionMove(evt);
     window.addEventListener(isMobile ? "touchend" : "mouseup", handleMouseUp);
   };
