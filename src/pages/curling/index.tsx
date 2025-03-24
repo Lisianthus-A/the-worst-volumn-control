@@ -88,6 +88,7 @@ function Curling() {
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const upperContextRef = useRef<CanvasRenderingContext2D | null>(null);
   const potImageRef = useRef<HTMLImageElement>(new Image());
+  const brushRef = useRef<HTMLDivElement>(null);
   const isMobile = detectMobile();
   const stateRef = useRef({
     isDragging: false,
@@ -107,12 +108,19 @@ function Curling() {
   };
 
   const handleInteractionMove = (evt: MouseEvent | TouchEvent) => {
+    const brush = brushRef.current;
+    if (!brush) {
+      return;
+    }
+    const [pageX, pageY] = getEventPosition(evt);
+    const [offsetX, offsetY] = stateRef.current.offset;
+    brush.style.setProperty("--x", `${pageX - offsetX - 32}px`);
+    brush.style.setProperty("--y", `${pageY - offsetY - 128}px`);
+
     if (!stateRef.current.isDragging) {
       return;
     }
 
-    const [pageX] = getEventPosition(evt);
-    const [offsetX] = stateRef.current.offset;
     let x = (pageX - offsetX) * ratio;
     x = Math.max(x, CONFIG.whiteCircle.start);
     x = Math.min(x, CONFIG.blueLine.startX);
@@ -267,8 +275,10 @@ function Curling() {
     // transition 0.2s linear
     const canvas = canvasRef.current;
     const upperCanvas = upperCanvasRef.current;
+    const brush = brushRef.current;
     canvas!.style.opacity = "1";
     upperCanvas!.style.opacity = "0";
+    brush!.style.opacity = "1";
   };
 
   const go = (finalVolume: number) => {
@@ -289,8 +299,10 @@ function Curling() {
       if (frame >= 60 * t) {
         const canvas = canvasRef.current;
         const upperCanvas = upperCanvasRef.current;
+        const brush = brushRef.current;
         canvas!.style.opacity = "0";
         upperCanvas!.style.opacity = "1";
+        brush!.style.opacity = "0";
         upperContextRef.current!.clearRect(
           0,
           0,
@@ -443,6 +455,7 @@ function Curling() {
         onTouchStart={isMobile ? handleInteractionStart : undefined}
         onTouchMove={isMobile ? handleInteractionMove : undefined}
       />
+      <div ref={brushRef} className={styles.brush} />
     </div>
   );
 }

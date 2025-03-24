@@ -1,5 +1,6 @@
 .wrapper {
   position: relative;
+  overflow: hidden;
 }
 
 .canvas {
@@ -15,5 +16,21 @@
   position: absolute;
   left: 0;
   top: 0;
+  transition: opacity 0.2s linear;
+}
+
+.brush {
+  --x: 0;
+  --y: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 75px;
+  height: 174px;
+  transform: translate(var(--x), var(--y));
+  background-image: url("./brush.png");
+  background-size: 75px 174px;
+  pointer-events: none;
+  opacity: 0;
   transition: opacity 0.2s linear;
 }
