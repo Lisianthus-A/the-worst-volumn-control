@@ -174,7 +174,7 @@ function Curling() {
       transitionAnimate();
       setTimeout(() => {
         go(volume);
-      }, 400);
+      }, 200);
     }
   };
 
@@ -204,10 +204,8 @@ function Curling() {
       );
     };
     // pot image movement 0 ~ 0.2s
-    // pot image scale to CONFIG.pot.finalSize 0.2 ~ 0.4s
-    // draw white rect 0 ~ 0.4s
-    const lowerTotalFrame = 60 * 0.4;
-    const halfLowerFrame = lowerTotalFrame * 0.5;
+    // draw white rect 0 ~ 0.2s
+    const lowerTotalFrame = 60 * 0.2;
     let lowerFrame = 0;
     const lowerAnimate = () => {
       if (lowerFrame >= lowerTotalFrame) {
@@ -222,65 +220,45 @@ function Curling() {
       const h =
         (lowerFrame / lowerTotalFrame) *
         (CONFIG.canvas.height - 2 * CONFIG.whiteRect.padding);
-      const y =
+      const whiteRectY =
         CONFIG.canvas.halfHeight -
         (CONFIG.canvas.halfHeight - CONFIG.whiteRect.padding) *
           (lowerFrame / lowerTotalFrame);
-      ctx.fillRect(0, y, CONFIG.canvas.width, h);
+      ctx.fillRect(0, whiteRectY, CONFIG.canvas.width, h);
       ctx.restore();
       drawUtils.blueLine(ctx, CONFIG.blueLine.startX);
 
       ctx.save();
-      if (lowerFrame <= halfLowerFrame) {
-        // pot movement
-        const x =
-          CONFIG.blueLine.startX -
-          CONFIG.whiteCircle.radius +
-          60 * ratio * (lowerFrame / halfLowerFrame);
-        const y = CONFIG.canvas.halfHeight - CONFIG.whiteCircle.radius;
-        const rorateAngel = (lowerFrame / 30) * Math.PI;
-        ctx.translate(x + CONFIG.pot.initSize / 2, y + CONFIG.pot.initSize / 2);
-        ctx.rotate(rorateAngel);
-        ctx.translate(
-          -x - CONFIG.pot.initSize / 2,
-          -y - CONFIG.pot.initSize / 2
-        );
-        ctx.drawImage(
-          potImageRef.current,
-          x,
-          y,
-          CONFIG.pot.initSize,
-          CONFIG.pot.initSize
-        );
-      } else {
-        // pot scale
-        const size =
-          CONFIG.pot.initSize +
-          ((CONFIG.pot.finalSize - CONFIG.pot.initSize) *
-            (lowerFrame - halfLowerFrame)) /
-            halfLowerFrame;
-
-        const x = CONFIG.blueLine.startX - size / 2 + 60 * ratio;
-        const y = CONFIG.canvas.halfHeight - size / 2;
-        const rorateAngel = (lowerFrame / 30) * Math.PI;
-        ctx.translate(
-          CONFIG.blueLine.startX + 60 * ratio,
-          CONFIG.canvas.halfHeight
-        );
-        ctx.rotate(rorateAngel);
-        ctx.translate(
-          -CONFIG.blueLine.startX - 60 * ratio,
-          -CONFIG.canvas.halfHeight
-        );
-        ctx.drawImage(potImageRef.current, x, y, size, size);
-      }
+      // pot movement
+      const x =
+        CONFIG.blueLine.startX -
+        CONFIG.whiteCircle.radius +
+        60 * ratio * (lowerFrame / lowerTotalFrame);
+      const potMovementY = CONFIG.canvas.halfHeight - CONFIG.whiteCircle.radius;
+      const rorateAngel = (lowerFrame / 30) * Math.PI;
+      ctx.translate(
+        x + CONFIG.pot.initSize / 2,
+        potMovementY + CONFIG.pot.initSize / 2
+      );
+      ctx.rotate(rorateAngel);
+      ctx.translate(
+        -x - CONFIG.pot.initSize / 2,
+        -potMovementY - CONFIG.pot.initSize / 2
+      );
+      ctx.drawImage(
+        potImageRef.current,
+        x,
+        potMovementY,
+        CONFIG.pot.initSize,
+        CONFIG.pot.initSize
+      );
       ctx.restore();
     };
 
     upperAnimate();
     lowerAnimate();
 
-    // transition 0.4s linear
+    // transition 0.2s linear
     const canvas = canvasRef.current;
     const upperCanvas = upperCanvasRef.current;
     canvas!.style.opacity = "1";
@@ -299,7 +277,7 @@ function Curling() {
     const t = Math.sqrt((-2 * distance) / a);
     const initSpeed = Math.sqrt(-2 * a * distance);
     let offsetX = 0;
-    let rotateAngel = 0.8 * Math.PI;
+    let rotateAngel = 0.4 * Math.PI;
     let frame = 0;
     const handler = () => {
       if (frame >= 60 * t) {
@@ -354,8 +332,12 @@ function Curling() {
         drawUtils.blueLine(ctx, startX % CONFIG.canvas.width);
       }
 
+      // pot image scale to CONFIG.pot.finalSize 0 ~ 0.2s
       // pot rotate
       ctx.save();
+      const potSize =
+        CONFIG.pot.initSize +
+        Math.min(frame / 12, 1) * (CONFIG.pot.finalSize - CONFIG.pot.initSize);
       const rate = Math.min(speed / 200, 1);
       rotateAngel += (Math.PI / 30) * rate;
       ctx.translate(
@@ -369,10 +351,10 @@ function Curling() {
       );
       ctx.drawImage(
         potImageRef.current,
-        CONFIG.blueLine.startX - CONFIG.pot.finalSize / 2 + 60 * ratio,
-        CONFIG.canvas.halfHeight - CONFIG.pot.finalSize / 2,
-        CONFIG.pot.finalSize,
-        CONFIG.pot.finalSize
+        CONFIG.blueLine.startX - potSize / 2 + 60 * ratio,
+        CONFIG.canvas.halfHeight - potSize / 2,
+        potSize,
+        potSize
       );
       ctx.restore();
     };
