@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { routes, mapPathToRoute } from "@/routes";
-import { Menu } from "@/components";
+import { Menu, GithubSvg } from "@/components";
 import classNames from "classnames";
 import ac from "@/utils/AudioController";
 import { useAppDispatch, useAppSelector } from "@/utils/hooks";
@@ -86,10 +86,21 @@ function Layout({ children }: Props) {
         className={classNames(styles.title, "tick", isComplete && "tick-green")}
       >
         <Menu />
+        <a
+          className={styles["github-wrapper"]}
+          href="https://github.com/Lisianthus-A/the-worst-volumn-control"
+          target="_blank"
+        >
+          <GithubSvg />
+        </a>
         {title}
       </div>
       <div className={styles.aim}>Aim: {route.aimText}</div>
-      {index !== 0 && <div className={styles.volume} ref={volumeRef}>Volume:</div>}
+      {index !== 0 && (
+        <div className={styles.volume} ref={volumeRef}>
+          Volume:
+        </div>
+      )}
       {children}
       <div className={styles.btns}>
         {hasPrev && <button onClick={() => handleNavigate(-1)}>Prev</button>}

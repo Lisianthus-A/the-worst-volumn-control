@@ -65,3 +65,12 @@
   display: flex;
   gap: 8px;
 }
+
+.github-wrapper {
+  display: block;
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+}
