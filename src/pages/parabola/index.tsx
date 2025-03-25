@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { detectMobile } from "@/utils";
 import ac from "@/utils/AudioController";
-import audioSvgPath from "./audioSvgPath";
+import { AudioSvg } from "@/components";
 import styles from "./index.module.css";
 
 interface CustomDownEvent {
@@ -157,12 +157,8 @@ function Parabola() {
 
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
-      <svg
+      <AudioSvg
         className={styles.icon}
-        viewBox="0 0 1280 1024"
-        xmlns="http://www.w3.org/2000/svg"
-        width="1em"
-        height="1em"
         fill="url(#radial-grad)"
         onMouseDown={isMobile ? undefined : handleMouseDown}
         onTouchStart={isMobile ? handleTouchStart : undefined}
@@ -172,8 +168,7 @@ function Parabola() {
           <stop offset="99.99%" stopColor="#4a95ff" />
           <stop offset="100%" stopColor="currentColor" />
         </radialGradient>
-        <path d={audioSvgPath} />
-      </svg>
+      </AudioSvg>
       <div className={styles.bar}>
         <div className={styles.handle} ref={handleRef} />
       </div>
