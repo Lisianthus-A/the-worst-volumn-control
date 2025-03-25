@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Link, useLocation } from "wouter";
 import classNames from "classnames";
-import { Portal } from "@/components";
+import { Portal, MenuSvg } from "@/components";
 import { routes } from "@/routes";
 import { useAppSelector } from "@/utils/hooks";
 import ac from "@/utils/AudioController";
@@ -24,16 +24,7 @@ function Menu() {
 
   return (
     <label className={styles.menu} htmlFor="menu-checkbox">
-      <svg
-        className={styles.icon}
-        viewBox="0 0 1024 1024"
-        xmlns="http://www.w3.org/2000/svg"
-        width="1em"
-        height="1em"
-        fill="currentColor"
-      >
-        <path d="M170.666667 298.666667a42.666667 42.666667 0 0 1 42.666666-42.666667h597.333334a42.666667 42.666667 0 1 1 0 85.333333H213.333333a42.666667 42.666667 0 0 1-42.666666-42.666666z m0 213.333333a42.666667 42.666667 0 0 1 42.666666-42.666667h597.333334a42.666667 42.666667 0 1 1 0 85.333334H213.333333a42.666667 42.666667 0 0 1-42.666666-42.666667z m0 213.333333a42.666667 42.666667 0 0 1 42.666666-42.666666h597.333334a42.666667 42.666667 0 1 1 0 85.333333H213.333333a42.666667 42.666667 0 0 1-42.666666-42.666667z" />
-      </svg>
+      <MenuSvg className={styles.icon} />
       <Portal>
         <input
           id="menu-checkbox"
