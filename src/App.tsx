@@ -14,7 +14,7 @@ function App() {
   }
 
   const Component = lazy(routeObj.route.component);
-  document.title = routeObj.route.name;
+  document.title = `${routeObj.route.name} - The Worst Volume Control`;
 
   return (
     <Layout>
