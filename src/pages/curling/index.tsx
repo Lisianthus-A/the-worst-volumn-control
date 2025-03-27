@@ -91,6 +91,7 @@ function Curling() {
   const brushRef = useRef<HTMLDivElement>(null);
   const isMobile = detectMobile();
   const stateRef = useRef({
+    animateId: 0,
     isDragging: false,
     offset: [0, 0],
     circleX: (CONFIG.whiteCircle.start + CONFIG.whiteCircle.end) / 2,
@@ -320,7 +321,7 @@ function Curling() {
         return;
       }
 
-      requestAnimationFrame(handler);
+      stateRef.current.animateId = requestAnimationFrame(handler);
       ++frame;
       const speed = Math.max(initSpeed + (a * frame) / 60, 0);
       offsetX += speed / 60;
@@ -436,6 +437,13 @@ function Curling() {
       window.removeEventListener("resize", onResize);
     };
   }, []);
+
+  useEffect(
+    () => () => {
+      cancelAnimationFrame(stateRef.current.animateId);
+    },
+    []
+  );
 
   return (
     <div className={styles.wrapper}>

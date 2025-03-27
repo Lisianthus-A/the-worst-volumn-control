@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import classNames from "classnames";
 import ac from "@/utils/AudioController";
 import styles from "./index.module.css";
@@ -19,6 +19,7 @@ function Dice() {
   const diceRef = useRef<HTMLDivElement>(null);
   const disabledRef = useRef(false);
   const typeRef = useRef("up");
+  const idRef = useRef(0);
 
   const handleDiceClick = () => {
     const el = diceRef.current;
@@ -33,13 +34,13 @@ function Dice() {
     setTimeout(() => {
       el.style.transition = "";
       el.style.transform = mapSideTransform[num];
-      setTimeout(() => {
+      idRef.current = setTimeout(() => {
         disabledRef.current = false;
         let volume = ac.getVolume() + (typeRef.current === "up" ? num : -num);
         volume = Math.max(0, volume);
         volume = Math.min(100, volume);
         ac.setVolume(volume);
-      }, 800);
+      }, 800) as unknown as number;
     }, 400);
   };
 
@@ -48,6 +49,13 @@ function Dice() {
       typeRef.current = evt.target.value;
     }
   };
+
+  useEffect(
+    () => () => {
+      clearTimeout(idRef.current);
+    },
+    []
+  );
 
   return (
     <div className={styles.wrapper}>
