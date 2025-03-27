@@ -1,1 +1,0 @@
-const n=()=>[/Android/i,/webOS/i,/iPhone/i,/iPad/i,/iPod/i,/BlackBerry/i,/Windows Phone/i].some(t=>navigator.userAgent.match(t)),o=(r,t)=>{const e=t-r+1;return r+Math.random()*e>>0},i=(r=16)=>{let t="";for(;t.length<r;)o(0,1)===1?t+=String.fromCharCode(o(97,122)):t+=String.fromCharCode(o(48,57));return t};export{n as d,i as r};
