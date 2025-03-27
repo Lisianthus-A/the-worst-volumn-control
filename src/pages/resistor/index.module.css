@@ -1,0 +1,57 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.canvas-wrapper {
+  position: relative;
+}
+
+.canvas {
+  display: block;
+  width: 400px;
+  max-width: 100%;
+  height: 300px;
+  background-color: #fff;
+}
+
+.selector-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.resistor-image {
+  display: block;
+  max-width: 100%;
+}
+
+.dac-text {
+  position: absolute;
+  bottom: 72px;
+  left: 64px;
+  user-select: none;
+}
+
+.voltage-text {
+  position: absolute;
+  top: 128px;
+  right: 112px;
+  user-select: none;
+}
+
+.resistor-text {
+  padding-right: 34px;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.sub {
+  vertical-align: sub;
+  font-size: 12px;
+}

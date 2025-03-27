@@ -29,3 +29,19 @@ export const randomString = (len = 16) => {
 
   return str;
 };
+
+export const toDecimal = (num: number | string, n = 2) => {
+  n = Math.max(0, n);
+  if (n === 0) {
+    return String(Number(num) >> 0);
+  }
+
+  const str = num.toString();
+  const index = str.indexOf(".");
+  if (index === -1) {
+    return str + "." + "0".repeat(n);
+  } else {
+    const temp = str.slice(0, index);
+    return temp + str.slice(index, index + 1 + n).padEnd(n + 1, "0");
+  }
+};
