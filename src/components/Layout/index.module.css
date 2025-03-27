@@ -6,6 +6,7 @@
 
 .layout {
   margin: 0 auto;
+  padding-bottom: 24px;
   height: 100vh;
   display: flex;
   flex-direction: column;
